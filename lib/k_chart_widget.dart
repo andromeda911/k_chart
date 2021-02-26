@@ -75,10 +75,13 @@ class KChartWidget extends StatefulWidget {
   final int pricePrecision;
   final int amountPrecision;
 
+  bool showVol;
+
   KChartWidget(this.datas,
       {this.mainState = MainState.MA,
       this.secondaryState = SecondaryState.MACD,
       this.isLine,
+      this.showVol,
       this.isChinese = true,
       this.timeFormat = TimeFormat.YEAR_MONTH_DAY,
       this.dateFormat,
@@ -208,6 +211,7 @@ class _KChartWidgetState extends State<KChartWidget> with TickerProviderStateMix
             size: Size(double.infinity, double.infinity),
             painter: ChartPainter(
                 datas: widget.datas,
+                showVolume: widget.showVol,
                 scaleX: mScaleX,
                 scrollX: mScrollX,
                 selectX: mSelectX,

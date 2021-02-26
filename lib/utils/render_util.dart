@@ -9,12 +9,15 @@ class RenderUtil {
     Paint paint,
   ) {
     canvas.drawPath(
-      dashPath(
-        Path()
-          ..moveTo(pointFrom.dx, pointFrom.dy)
-          ..lineTo(pointTo.dx, pointTo.dy),
-        dashArray: CircularIntervalList<double>([3.0, 3.0]),
-      ),
+      Path()
+        ..moveTo(pointFrom.dx, pointFrom.dy)
+        ..lineTo(pointTo.dx, pointTo.dy),
+      //dashPath(
+      //  Path()
+      //    ..moveTo(pointFrom.dx, pointFrom.dy)
+      //    ..lineTo(pointTo.dx, pointTo.dy),
+      //  dashArray: CircularIntervalList<double>([3.0, 3.0]),
+      //),
       paint,
     );
   }

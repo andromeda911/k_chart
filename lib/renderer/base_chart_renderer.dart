@@ -16,7 +16,7 @@ abstract class BaseChartRenderer<T> {
   int fixedLength;
   final String fontFamily;
   final List<Color> bgColor;
-
+  Radius candleBRad = Radius.circular(5);
   // Price precision used to draw the right side text
   // (prices near the chart). Also can be used for any prices
   // on the chart.

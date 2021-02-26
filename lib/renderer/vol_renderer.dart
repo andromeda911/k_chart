@@ -126,56 +126,56 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
 
   @override
   void drawRightText(Canvas canvas, Size size, textStyle, int gridRows) {
-    final values = [maxValue, maxValue / 2];
-
-    values.forEach((v) {
-      TextSpan span = TextSpan(
-        text: ChartFormats.money[amountPrecision].format(v),
-        style: textStyle,
-      );
-      TextPainter tp = TextPainter(
-        text: span,
-        textDirection: TextDirection.ltr,
-      );
-      tp.layout();
-      var lineY = chartRect.top + chartRect.height * (1 - v / maxValue) - topPadding;
-      tp.paint(
-        canvas,
-        Offset(
-          chartRect.width - tp.width - rightTextScreenSidePadding,
-          lineY + rightTextAxisLinePadding,
-        ),
-      );
-      if (v == maxValue ~/ 2) {
-        RenderUtil.drawDashedLine(
-          canvas,
-          Offset(chartRect.width - rightCoverWidth, lineY),
-          Offset(chartRect.width, lineY),
-          gridPaint,
-        );
-      }
-    });
-
-    RenderUtil.drawDashedLine(
-      canvas,
-      Offset(chartRect.width - rightCoverWidth, chartRect.top),
-      Offset(chartRect.width - rightCoverWidth, chartRect.bottom),
-      gridPaint,
-    );
-
-    RenderUtil.drawDashedLine(
-      canvas,
-      Offset(chartRect.width - gridPaint.strokeWidth / 2, chartRect.top),
-      Offset(chartRect.width - gridPaint.strokeWidth / 2, chartRect.bottom),
-      gridPaint,
-    );
-
-    RenderUtil.drawDashedLine(
-      canvas,
-      Offset(chartRect.width - gridPaint.strokeWidth / 2 - rightCoverWidth, chartRect.bottom),
-      Offset(chartRect.width - gridPaint.strokeWidth / 2, chartRect.bottom),
-      gridPaint,
-    );
+    //final values = [maxValue, maxValue / 2];
+//
+    //values.forEach((v) {
+    //  TextSpan span = TextSpan(
+    //    text: ChartFormats.money[amountPrecision].format(v),
+    //    style: textStyle,
+    //  );
+    //  TextPainter tp = TextPainter(
+    //    text: span,
+    //    textDirection: TextDirection.ltr,
+    //  );
+    //  tp.layout();
+    //  var lineY = chartRect.top + chartRect.height * (1 - v / maxValue) - topPadding;
+    //  tp.paint(
+    //    canvas,
+    //    Offset(
+    //      chartRect.width - tp.width - rightTextScreenSidePadding,
+    //      lineY + rightTextAxisLinePadding,
+    //    ),
+    //  );
+    //  if (v == maxValue ~/ 2) {
+    //    RenderUtil.drawDashedLine(
+    //      canvas,
+    //      Offset(chartRect.width - rightCoverWidth, lineY),
+    //      Offset(chartRect.width, lineY),
+    //      gridPaint,
+    //    );
+    //  }
+    //});
+//
+    //RenderUtil.drawDashedLine(
+    //  canvas,
+    //  Offset(chartRect.width - rightCoverWidth, chartRect.top),
+    //  Offset(chartRect.width - rightCoverWidth, chartRect.bottom),
+    //  gridPaint,
+    //);
+//
+    //RenderUtil.drawDashedLine(
+    //  canvas,
+    //  Offset(chartRect.width - gridPaint.strokeWidth / 2, chartRect.top),
+    //  Offset(chartRect.width - gridPaint.strokeWidth / 2, chartRect.bottom),
+    //  gridPaint,
+    //);
+//
+    //RenderUtil.drawDashedLine(
+    //  canvas,
+    //  Offset(chartRect.width - gridPaint.strokeWidth / 2 - rightCoverWidth, chartRect.bottom),
+    //  Offset(chartRect.width - gridPaint.strokeWidth / 2, chartRect.bottom),
+    //  gridPaint,
+    //);
   }
 
   @override
@@ -192,12 +192,12 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
       gridPaint,
     );
 
-    RenderUtil.drawDashedLine(
-      canvas,
-      Offset(0, bottom - height / 2),
-      Offset(width, bottom - height / 2),
-      gridPaint,
-    );
+    //RenderUtil.drawDashedLine(
+    //  canvas,
+    //  Offset(0, bottom - height / 2),
+    //  Offset(width, bottom - height / 2),
+    //  gridPaint,
+    //);
 
     double columnSpace = chartRect.width / gridColumns;
     for (int i = 0; i <= columnSpace; i++) {

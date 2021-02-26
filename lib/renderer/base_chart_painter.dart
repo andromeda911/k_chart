@@ -16,6 +16,7 @@ abstract class BaseChartPainter extends CustomPainter {
   List<KLineEntity> datas;
   MainState mainState = MainState.MA;
   SecondaryState secondaryState = SecondaryState.MACD;
+  bool showVolume = false;
   double scaleX = 1.0;
   double scrollX = 0.0;
   double selectX;
@@ -25,9 +26,9 @@ abstract class BaseChartPainter extends CustomPainter {
   //3块区域大小与位置
   Rect mMainRect, mVolRect, mSecondaryRect;
   double mDisplayHeight, mWidth;
-  double mTopPadding = 0.0;
+  double mTopPadding = 10.0;
   double mBottomPadding = 20.0;
-  double mChildPadding = 0.0;
+  double mChildPadding = 15.0;
   final int mGridRows = 6, mGridColumns = 3;
   int mStartIndex = 0, mStopIndex = 0;
   double mMainMaxValue = double.minPositive, mMainMinValue = double.maxFinite;
@@ -59,6 +60,7 @@ abstract class BaseChartPainter extends CustomPainter {
       @required this.isLongPress,
       @required this.selectX,
       this.mainState,
+      this.showVolume,
       this.secondaryState,
       this.isLine,
       this.fontFamily,
@@ -153,9 +155,14 @@ abstract class BaseChartPainter extends CustomPainter {
   void drawLastPriceLine(Canvas canvas, Size size, KLineEntity point);
 
   void initRect(Size size) {
-    double mainHeight = secondaryState != SecondaryState.NONE ? mDisplayHeight * 0.6 : mDisplayHeight * 0.8;
-    double volHeight = mDisplayHeight * 0.2;
-    double secondaryHeight = mDisplayHeight * 0.2;
+    double mult = 0.55;
+    if (secondaryState == SecondaryState.NONE) mult += 0.25;
+    if (showVolume != true) mult += 0.2;
+
+    double mainHeight = mDisplayHeight * mult;
+
+    double volHeight = showVolume ? mDisplayHeight * 0.2 : 0.0;
+    double secondaryHeight = mDisplayHeight * 0.25;
     mMainRect = Rect.fromLTRB(0, mTopPadding, mWidth, mTopPadding + mainHeight);
     mVolRect = Rect.fromLTRB(0, mMainRect.bottom + mChildPadding, mWidth, mMainRect.bottom + volHeight);
     //secondaryState == SecondaryState.NONE隐藏副视图

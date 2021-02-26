@@ -272,60 +272,60 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
 
   @override
   void drawRightText(Canvas canvas, Size size, textStyle, int gridRows) {
-    final values = [
-      maxValue,
-      minValue + (maxValue - minValue) / 2,
-      minValue,
-    ];
-
-    final ys = [
-      chartRect.top,
-      chartRect.top + (chartRect.bottom - chartRect.top) / 2,
-      chartRect.bottom,
-    ];
-
-    for (int i = 0; i < values.length; i++) {
-      final painter = TextPainter(
-        text: TextSpan(
-          text: format(values[i]),
-          style: textStyle,
-        ),
-        textDirection: TextDirection.ltr,
-      );
-      painter.layout();
-      var y = ys[i] - topPadding + rightTextAxisLinePadding;
-      // the latest number should be ABOVE hte line, not under it
-      if (i == values.length - 1) {
-        y = ys[i] - topPadding - rightTextAxisLinePadding - painter.height;
-      }
-      painter.paint(
-        canvas,
-        Offset(
-          chartRect.width - painter.width - rightTextScreenSidePadding,
-          y,
-        ),
-      );
-      RenderUtil.drawDashedLine(
-        canvas,
-        Offset(chartRect.width - rightCoverWidth, ys[i] - topPadding),
-        Offset(chartRect.width, ys[i] - topPadding),
-        gridPaint,
-      );
-    }
-
-    RenderUtil.drawDashedLine(
-      canvas,
-      Offset(chartRect.width - rightCoverWidth, chartRect.top),
-      Offset(chartRect.width - rightCoverWidth, chartRect.bottom),
-      gridPaint,
-    );
-
-    RenderUtil.drawDashedLine(
-      canvas,
-      Offset(chartRect.width - gridPaint.strokeWidth / 2, chartRect.top),
-      Offset(chartRect.width - gridPaint.strokeWidth / 2, chartRect.bottom),
-      gridPaint,
-    );
+    //final values = [
+    //  maxValue,
+    //  minValue + (maxValue - minValue) / 2,
+    //  minValue,
+    //];
+//
+    //final ys = [
+    //  chartRect.top,
+    //  chartRect.top + (chartRect.bottom - chartRect.top) / 2,
+    //  chartRect.bottom,
+    //];
+//
+    //for (int i = 0; i < values.length; i++) {
+    //  final painter = TextPainter(
+    //    text: TextSpan(
+    //      text: format(values[i]),
+    //      style: textStyle,
+    //    ),
+    //    textDirection: TextDirection.ltr,
+    //  );
+    //  painter.layout();
+    //  var y = ys[i] - topPadding + rightTextAxisLinePadding;
+    //  // the latest number should be ABOVE hte line, not under it
+    //  if (i == values.length - 1) {
+    //    y = ys[i] - topPadding - rightTextAxisLinePadding - painter.height;
+    //  }
+    //  painter.paint(
+    //    canvas,
+    //    Offset(
+    //      chartRect.width - painter.width - rightTextScreenSidePadding,
+    //      y,
+    //    ),
+    //  );
+    //  RenderUtil.drawDashedLine(
+    //    canvas,
+    //    Offset(chartRect.width - rightCoverWidth, ys[i] - topPadding),
+    //    Offset(chartRect.width, ys[i] - topPadding),
+    //    gridPaint,
+    //  );
+    //}
+//
+    //RenderUtil.drawDashedLine(
+    //  canvas,
+    //  Offset(chartRect.width - rightCoverWidth, chartRect.top),
+    //  Offset(chartRect.width - rightCoverWidth, chartRect.bottom),
+    //  gridPaint,
+    //);
+//
+    //RenderUtil.drawDashedLine(
+    //  canvas,
+    //  Offset(chartRect.width - gridPaint.strokeWidth / 2, chartRect.top),
+    //  Offset(chartRect.width - gridPaint.strokeWidth / 2, chartRect.bottom),
+    //  gridPaint,
+    //);
   }
 
   @override
@@ -334,18 +334,12 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
     final bottom = chartRect.bottom;
     final middle = top + (bottom - top) / 2;
 
-    RenderUtil.drawDashedLine(
-      canvas,
-      Offset(0, top),
-      Offset(chartRect.width, top),
-      gridPaint,
-    );
-    RenderUtil.drawDashedLine(
-      canvas,
-      Offset(0, middle),
-      Offset(chartRect.width, middle),
-      gridPaint,
-    );
+    //RenderUtil.drawDashedLine(
+    //  canvas,
+    //  Offset(0, middle),
+    //  Offset(chartRect.width, middle),
+    //  gridPaint,
+    //);
     RenderUtil.drawDashedLine(
       canvas,
       Offset(0, bottom),
@@ -372,6 +366,12 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
         Offset(columnSpace * i, chartRect.bottom),
         gridPaint,
       );*/
+      //RenderUtil.drawDashedLine(
+      //  canvas,
+      //  Offset(0, top - 14),
+      //  Offset(chartRect.width, top - 14),
+      //  gridPaint,
+      //);
     }
   }
 }

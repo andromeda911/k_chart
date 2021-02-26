@@ -91,6 +91,7 @@ class ChartPainter extends BaseChartPainter {
     int kdjMaPeriod2,
     int pricePrecision,
     int amountPrecision,
+    bool showVolume,
   })  : assert(bgColor == null || bgColor.length >= 2),
         super(
             datas: datas,
@@ -99,6 +100,7 @@ class ChartPainter extends BaseChartPainter {
             isLongPress: isLongPass,
             selectX: selectX,
             mainState: mainState,
+            showVolume: showVolume,
             secondaryState: secondaryState,
             isLine: isLine,
             fontFamily: fontFamily,
@@ -141,8 +143,8 @@ class ChartPainter extends BaseChartPainter {
       bgColor: bgColor,
       pricePrecision: pricePrecision,
     );
-    mVolRenderer ??= VolRenderer(mVolRect, mVolMaxValue, mVolMinValue, mChildPadding, fixedLength, shortFormatter: shortFormatter, wordVolume: wordVolume, fontFamily: fontFamily, bgColor: bgColor, pricePrecision: pricePrecision, amountPrecision: amountPrecision);
-    if (mSecondaryRect != null)
+    mVolRenderer ??= showVolume ? VolRenderer(mVolRect, mVolMaxValue, mVolMinValue, mChildPadding, fixedLength, shortFormatter: shortFormatter, wordVolume: wordVolume, fontFamily: fontFamily, bgColor: bgColor, pricePrecision: pricePrecision, amountPrecision: amountPrecision) : null;
+    if (mSecondaryRect != null) {
       mSecondaryRenderer ??= SecondaryRenderer(
         mSecondaryRect,
         mSecondaryMaxValue,
@@ -162,6 +164,7 @@ class ChartPainter extends BaseChartPainter {
         kdjMaPeriod2: kdjMaPeriod2,
         pricePrecision: pricePrecision,
       );
+    }
   }
 
   @override
@@ -242,7 +245,7 @@ class ChartPainter extends BaseChartPainter {
     double startX = getX(mStartIndex) - mPointWidth / 2;
     double stopX = getX(mStopIndex) + mPointWidth / 2;
     double y = 0.0;
-    for (var i = 0; i <= mGridColumns; ++i) {
+    for (var i = 0; i <= mGridColumns - 1; ++i) {
       double translateX = xToTranslateX(columnSpace * i);
       if (translateX >= startX && translateX <= stopX) {
         int index = indexOfTranslateX(translateX);

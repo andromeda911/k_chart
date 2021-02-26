@@ -73,7 +73,7 @@ class ChartColors {
     upColorDark = Color(0xFF009F4C);
     dnColorDark = Color(0xFFE64439);
     volColor = Colors.white54;
-    gridColor = Colors.white54;
+    gridColor = Colors.white12;
 
     macdColor = Color(0xffb388ff);
     difColor = Color(0xffffea00);

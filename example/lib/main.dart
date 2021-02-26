@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isLine = false;
   bool isChinese = true;
   List<DepthEntity> _bids, _asks;
-
+  bool showVol = false;
   @override
   void initState() {
     super.initState();
@@ -46,14 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
     rootBundle.loadString('assets/depth.json').then((result) {
       final parseJson = json.decode(result);
       Map tick = parseJson['tick'];
-      var bids = tick['bids']
-          .map((item) => DepthEntity(item[0], item[1]))
-          .toList()
-          .cast<DepthEntity>();
-      var asks = tick['asks']
-          .map((item) => DepthEntity(item[0], item[1]))
-          .toList()
-          .cast<DepthEntity>();
+      var bids = tick['bids'].map((item) => DepthEntity(item[0], item[1])).toList().cast<DepthEntity>();
+      var asks = tick['asks'].map((item) => DepthEntity(item[0], item[1])).toList().cast<DepthEntity>();
       initDepth(bids, asks);
     });
   }
@@ -90,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: <Widget>[
           Stack(children: <Widget>[
             Container(
-              height: 450,
+              height: 350,
               width: double.infinity,
               child: KChartWidget(
                 datas,
@@ -100,19 +94,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 fixedLength: 2,
                 timeFormat: TimeFormat.YEAR_MONTH_DAY,
                 isChinese: false,
-                bgColor: [
-                  Color(0xFF121128),
-                  Color(0xFF121128),
-                  Color(0xFF121128)
-                ],
+                showVol: showVol,
+                bgColor: [Color(0xFF121128), Color(0xFF121128), Color(0xFF121128)],
               ),
             ),
-            if (showLoading)
-              Container(
-                  width: double.infinity,
-                  height: 450,
-                  alignment: Alignment.center,
-                  child: CircularProgressIndicator()),
+            if (showLoading) Container(width: double.infinity, height: 450, alignment: Alignment.center, child: CircularProgressIndicator()),
           ]),
           buildButtons(),
           Container(
@@ -141,6 +127,11 @@ class _MyHomePageState extends State<MyHomePage> {
             button(
               "Bars",
               onPressed: () => isLine = false,
+              selected: !isLine,
+            ),
+            button(
+              "Show Vol",
+              onPressed: () => showVol = !showVol,
               selected: !isLine,
             ),
           ],
@@ -258,12 +249,7 @@ class _MyHomePageState extends State<MyHomePage> {
     future.then((result) {
       Map parseJson = json.decode(result);
       List list = parseJson['data'];
-      datas = list
-          .map((item) => KLineEntity.fromJson(item))
-          .toList()
-          .reversed
-          .toList()
-          .cast<KLineEntity>();
+      datas = list.map((item) => KLineEntity.fromJson(item)).toList().reversed.toList().cast<KLineEntity>();
       DataUtil.calculate(datas);
       showLoading = false;
       setState(() {});
@@ -276,8 +262,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //获取火币数据，需要翻墙
   Future<String> getIPAddress(String period) async {
-    var url =
-        'https://api.huobi.br.com/market/history/kline?period=${period ?? '1day'}&size=300&symbol=btcusdt';
+    var url = 'https://api.huobi.br.com/market/history/kline?period=${period ?? '1day'}&size=300&symbol=btcusdt';
     String result;
     var response = await http.get(url);
     if (response.statusCode == 200) {

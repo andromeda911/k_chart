@@ -177,12 +177,12 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
             topPadding + rightTextAxisLinePadding,
           ),
         );
-        RenderUtil.drawDashedLine(
-          canvas,
-          Offset(chartRect.width - rightCoverWidth, topPadding),
-          Offset(chartRect.width, topPadding),
-          gridPaint,
-        );
+        //RenderUtil.drawDashedLine(
+        //  canvas,
+        //  Offset(chartRect.width - rightCoverWidth, topPadding),
+        //  Offset(chartRect.width, topPadding),
+        //  gridPaint,
+        //);
       } else {
         // the last number should be above the line
         tp.paint(
@@ -192,28 +192,28 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
             topPadding + rowSpace * i + rightTextAxisLinePadding - (i == gridRows ? tp.height + 10 : 0),
           ),
         );
-        RenderUtil.drawDashedLine(
-          canvas,
-          Offset(chartRect.width - rightCoverWidth, topPadding + rowSpace * i),
-          Offset(chartRect.width, topPadding + rowSpace * i),
-          gridPaint,
-        );
+        //RenderUtil.drawDashedLine(
+        //  canvas,
+        //  Offset(chartRect.width - rightCoverWidth, topPadding + rowSpace * i),
+        //  Offset(chartRect.width, topPadding + rowSpace * i),
+        //  gridPaint,
+        //);
       }
     }
 
-    RenderUtil.drawDashedLine(
-      canvas,
-      Offset(chartRect.width - rightCoverWidth, 0),
-      Offset(chartRect.width - rightCoverWidth, chartRect.height),
-      gridPaint,
-    );
+    //RenderUtil.drawDashedLine(
+    //  canvas,
+    //  Offset(chartRect.width - rightCoverWidth, 0),
+    //  Offset(chartRect.width - rightCoverWidth, chartRect.height),
+    //  gridPaint,
+    //);
 
-    RenderUtil.drawDashedLine(
-      canvas,
-      Offset(chartRect.width - gridPaint.strokeWidth / 2, 0),
-      Offset(chartRect.width - gridPaint.strokeWidth / 2, chartRect.height),
-      gridPaint,
-    );
+    //RenderUtil.drawDashedLine(
+    //  canvas,
+    //  Offset(chartRect.width - gridPaint.strokeWidth / 2, 0),
+    //  Offset(chartRect.width - gridPaint.strokeWidth / 2, chartRect.height),
+    //  gridPaint,
+    //);
   }
 
   @override
@@ -221,14 +221,19 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     double rowSpace = chartRect.height / gridRows;
     for (int i = 1; i <= gridRows; i++) {
       canvas.drawPath(
-        dashPath(
           Path()
             ..moveTo(0, rowSpace * i + topPadding)
             ..lineTo(chartRect.width, rowSpace * i + topPadding),
-          dashArray: CircularIntervalList<double>([3.0, 3.0]),
-        ),
-        gridPaint,
-      );
+          gridPaint);
+      //canvas.drawPath(
+      //  dashPath(
+      //    Path()
+      //      ..moveTo(0, rowSpace * i + topPadding)
+      //      ..lineTo(chartRect.width, rowSpace * i + topPadding),
+      //    dashArray: CircularIntervalList<double>([3.0, 3.0]),
+      //  ),
+      //  gridPaint,
+      //);
     }
 
     double columnSpace = chartRect.width / gridColumns;
@@ -384,22 +389,24 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     double lineR = mCandleLineWidth / 2;
     if (open > close) {
       chartPaint.color = ChartColors().upColor;
-      canvas.drawRect(
-        Rect.fromLTRB(curX - r, close, curX + r, open),
+
+      canvas.drawRRect(
+        RRect.fromLTRBR(curX - r, close, curX + r, open, candleBRad),
         chartPaint,
       );
-      canvas.drawRect(
-        Rect.fromLTRB(curX - lineR, high, curX + lineR, low),
+      canvas.drawRRect(
+        RRect.fromLTRBR(curX - lineR, high, curX + lineR, low, candleBRad),
         chartPaint,
       );
     } else if (close > open) {
       chartPaint.color = ChartColors().dnColor;
-      canvas.drawRect(
-        Rect.fromLTRB(curX - r, open, curX + r, close),
+      canvas.drawRRect(
+        RRect.fromLTRBR(curX - r, open, curX + r, close, candleBRad),
         chartPaint,
       );
-      canvas.drawRect(
-        Rect.fromLTRB(curX - lineR, high, curX + lineR, low),
+
+      canvas.drawRRect(
+        RRect.fromLTRBR(curX - lineR, high, curX + lineR, low, candleBRad),
         chartPaint,
       );
     } else {
@@ -410,8 +417,8 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
         chartPaint,
       );
       if (high != low) {
-        canvas.drawRect(
-          Rect.fromLTRB(curX - lineR, high, curX + lineR, low),
+        canvas.drawRRect(
+          RRect.fromLTRBR(curX - lineR, high, curX + lineR, low, candleBRad),
           chartPaint,
         );
       }
