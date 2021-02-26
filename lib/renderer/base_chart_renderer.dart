@@ -33,24 +33,14 @@ abstract class BaseChartRenderer<T> {
     ..isAntiAlias = true
     ..filterQuality = FilterQuality.high
     ..strokeWidth = 1.0
-    ..color = Color(0x06A86A9C1);
+    ..color = ChartColors().gridColor;
 
   Paint backgroundPaint = Paint()
     ..isAntiAlias = true
     ..style = PaintingStyle.fill
-    ..color = ChartColors.background;
+    ..color = ChartColors().background;
 
-  BaseChartRenderer({
-    @required this.chartRect,
-    @required this.maxValue,
-    @required this.minValue,
-    @required this.topPadding,
-    @required this.fixedLength,
-    this.fontFamily,
-    this.bgColor,
-    this.pricePrecision,
-    this.amountPrecision
-  }) {
+  BaseChartRenderer({@required this.chartRect, @required this.maxValue, @required this.minValue, @required this.topPadding, @required this.fixedLength, this.fontFamily, this.bgColor, this.pricePrecision, this.amountPrecision}) {
     if (maxValue == minValue) {
       maxValue *= 1.5;
       minValue /= 2;
@@ -110,13 +100,7 @@ abstract class BaseChartRenderer<T> {
     Canvas canvas,
     Color color,
   ) {
-    if (prices == null ||
-        prices.isEmpty ||
-        prices.any((p) => p == null) ||
-        xs == null ||
-        xs.isEmpty ||
-        xs.any((x) => x == null) ||
-        xs.length != prices.length) {
+    if (prices == null || prices.isEmpty || prices.any((p) => p == null) || xs == null || xs.isEmpty || xs.any((x) => x == null) || xs.length != prices.length) {
       return;
     }
 

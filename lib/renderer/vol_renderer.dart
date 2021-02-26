@@ -10,7 +10,7 @@ import '../renderer/base_chart_renderer.dart';
 import 'base_chart_renderer.dart';
 
 class VolRenderer extends BaseChartRenderer<VolumeEntity> {
-  double mVolWidth = ChartStyle.volWidth;
+  double mVolWidth = ChartStyle().volWidth;
 
   /// Used to draw a shortened int in the right text
   /// like 100K instead of 100,000
@@ -36,17 +36,7 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
     List<Color> bgColor,
     int pricePrecision,
     int amountPrecision,
-  }) : super(
-          chartRect: mainRect,
-          maxValue: maxValue,
-          minValue: minValue,
-          topPadding: topPadding,
-          fixedLength: fixedLength,
-          fontFamily: fontFamily,
-          bgColor: bgColor,
-          pricePrecision: pricePrecision,
-          amountPrecision: amountPrecision
-        );
+  }) : super(chartRect: mainRect, maxValue: maxValue, minValue: minValue, topPadding: topPadding, fixedLength: fixedLength, fontFamily: fontFamily, bgColor: bgColor, pricePrecision: pricePrecision, amountPrecision: amountPrecision);
 
   @override
   void drawChart(
@@ -61,27 +51,19 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
     double top = getVolY(curPoint.vol);
     double bottom = chartRect.bottom;
     if (curPoint.vol != 0) {
-      canvas.drawRect(
-          Rect.fromLTRB(curX - r, top, curX + r, bottom),
-          chartPaint
-            ..color = curPoint.close > curPoint.open
-                ? ChartColors.upColor
-                : ChartColors.dnColor);
+      canvas.drawRect(Rect.fromLTRB(curX - r, top, curX + r, bottom), chartPaint..color = curPoint.close > curPoint.open ? ChartColors().upColor : ChartColors().dnColor);
     }
 
     if (lastPoint.MA5Volume != 0) {
-      drawLine(lastPoint.MA5Volume, curPoint.MA5Volume, canvas, lastX, curX,
-          ChartColors.ma5Color);
+      drawLine(lastPoint.MA5Volume, curPoint.MA5Volume, canvas, lastX, curX, ChartColors().ma5Color);
     }
 
     if (lastPoint.MA10Volume != 0) {
-      drawLine(lastPoint.MA10Volume, curPoint.MA10Volume, canvas, lastX, curX,
-          ChartColors.ma10Color);
+      drawLine(lastPoint.MA10Volume, curPoint.MA10Volume, canvas, lastX, curX, ChartColors().ma10Color);
     }
   }
 
-  double getVolY(double value) =>
-      (maxValue - value) * (chartRect.height / maxValue) + chartRect.top;
+  double getVolY(double value) => (maxValue - value) * (chartRect.height / maxValue) + chartRect.top;
 
   @override
   void drawText(Canvas canvas, VolumeEntity data, double x) {
@@ -108,7 +90,7 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
     TextSpan span = TextSpan(
       text: wordVolume,
       style: TextStyle(
-        fontSize: ChartStyle.fontSize,
+        fontSize: ChartStyle().fontSize,
         color: Colors.white.withOpacity(0.5),
         fontWeight: FontWeight.bold,
       ),
@@ -120,8 +102,7 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
     tp.layout();
 
     // Volume badge
-    final yLinePlusPadding =
-        chartRect.top - topPadding + rightTextAxisLinePadding;
+    final yLinePlusPadding = chartRect.top - topPadding + rightTextAxisLinePadding;
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromLTRB(
@@ -157,8 +138,7 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
         textDirection: TextDirection.ltr,
       );
       tp.layout();
-      var lineY =
-          chartRect.top + chartRect.height * (1 - v / maxValue) - topPadding;
+      var lineY = chartRect.top + chartRect.height * (1 - v / maxValue) - topPadding;
       tp.paint(
         canvas,
         Offset(
@@ -192,8 +172,7 @@ class VolRenderer extends BaseChartRenderer<VolumeEntity> {
 
     RenderUtil.drawDashedLine(
       canvas,
-      Offset(chartRect.width - gridPaint.strokeWidth / 2 - rightCoverWidth,
-          chartRect.bottom),
+      Offset(chartRect.width - gridPaint.strokeWidth / 2 - rightCoverWidth, chartRect.bottom),
       Offset(chartRect.width - gridPaint.strokeWidth / 2, chartRect.bottom),
       gridPaint,
     );

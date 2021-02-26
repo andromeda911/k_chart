@@ -18,17 +18,7 @@ enum SecondaryState { MACD, KDJ, RSI, WR, NONE }
 class TimeFormat {
   static const List<String> MONTH_DATE_COMMA_YEAR = [M, ' ', dd, ', ', yyyy];
   static const List<String> YEAR_MONTH_DAY = [yyyy, '-', mm, '-', dd];
-  static const List<String> YEAR_MONTH_DAY_WITH_HOUR = [
-    yyyy,
-    '-',
-    mm,
-    '-',
-    dd,
-    ' ',
-    HH,
-    ':',
-    nn
-  ];
+  static const List<String> YEAR_MONTH_DAY_WITH_HOUR = [yyyy, '-', mm, '-', dd, ' ', HH, ':', nn];
 }
 
 /// The offset which chart will do when user dragging to the right
@@ -85,50 +75,48 @@ class KChartWidget extends StatefulWidget {
   final int pricePrecision;
   final int amountPrecision;
 
-  KChartWidget(
-    this.datas, {
-    this.mainState = MainState.MA,
-    this.secondaryState = SecondaryState.MACD,
-    this.isLine,
-    this.isChinese = true,
-    this.timeFormat = TimeFormat.YEAR_MONTH_DAY,
-    this.dateFormat,
-    this.onLoadMore,
-    this.bgColor,
-    this.fixedLength,
-    this.maDayList = const [5, 10, 20],
-    this.flingTime = 600,
-    this.flingRatio = 0.5,
-    this.flingCurve = Curves.decelerate,
-    this.isOnDrag,
-    this.shortFormatter,
-    this.fontFamily,
-    this.wordVolume = 'Volume',
-    this.wordDate = 'Date',
-    this.wordOpen = 'Open',
-    this.wordHigh = 'High',
-    this.wordLow = 'Low',
-    this.wordClose = 'Close',
-    this.wordChange = 'Change',
-    this.wordAmount = 'Amount',
-    this.rsiPeriod = 6,
-    this.wrPeriod = 14,
-    this.macdShortPeriod = 12,
-    this.macdLongPeriod = 26,
-    this.macdMaPeriod = 9,
-    this.kdjCalcPeriod = 9,
-    this.kdjMaPeriod1 = 3,
-    this.kdjMaPeriod2 = 3,
-    this.pricePrecision = defaultPricePrecision,
-    this.amountPrecision = defaultAmountPrecision
-  }) : assert(maDayList != null);
+  KChartWidget(this.datas,
+      {this.mainState = MainState.MA,
+      this.secondaryState = SecondaryState.MACD,
+      this.isLine,
+      this.isChinese = true,
+      this.timeFormat = TimeFormat.YEAR_MONTH_DAY,
+      this.dateFormat,
+      this.onLoadMore,
+      this.bgColor,
+      this.fixedLength,
+      this.maDayList = const [5, 10, 20],
+      this.flingTime = 600,
+      this.flingRatio = 0.5,
+      this.flingCurve = Curves.decelerate,
+      this.isOnDrag,
+      this.shortFormatter,
+      this.fontFamily,
+      this.wordVolume = 'Volume',
+      this.wordDate = 'Date',
+      this.wordOpen = 'Open',
+      this.wordHigh = 'High',
+      this.wordLow = 'Low',
+      this.wordClose = 'Close',
+      this.wordChange = 'Change',
+      this.wordAmount = 'Amount',
+      this.rsiPeriod = 6,
+      this.wrPeriod = 14,
+      this.macdShortPeriod = 12,
+      this.macdLongPeriod = 26,
+      this.macdMaPeriod = 9,
+      this.kdjCalcPeriod = 9,
+      this.kdjMaPeriod1 = 3,
+      this.kdjMaPeriod2 = 3,
+      this.pricePrecision = defaultPricePrecision,
+      this.amountPrecision = defaultAmountPrecision})
+      : assert(maDayList != null);
 
   @override
   _KChartWidgetState createState() => _KChartWidgetState();
 }
 
-class _KChartWidgetState extends State<KChartWidget>
-    with TickerProviderStateMixin {
+class _KChartWidgetState extends State<KChartWidget> with TickerProviderStateMixin {
   //
   double mScaleX = 1.0, mScrollX = 0.0, mSelectX = 0.0;
   StreamController<InfoWindowEntity> mInfoWindowStream;
@@ -137,26 +125,8 @@ class _KChartWidgetState extends State<KChartWidget>
   Animation<double> aniX;
   double _lastScale = 1.0;
   bool isScale = false, isDrag = false, isLongPress = false;
-  final List<String> infoNamesCN = [
-    "时间",
-    "开",
-    "高",
-    "低",
-    "收",
-    "涨跌额",
-    "涨跌幅",
-    "成交额"
-  ];
-  final List<String> infoNamesEN = [
-    "Date",
-    "Open",
-    "High",
-    "Low",
-    "Close",
-    "Change",
-    "Change%",
-    "Amount"
-  ];
+  final List<String> infoNamesCN = ["时间", "开", "高", "低", "收", "涨跌额", "涨跌幅", "成交额"];
+  final List<String> infoNamesEN = ["Date", "Open", "High", "Low", "Close", "Change", "Change%", "Amount"];
   List<String> infos;
 
   //
@@ -192,8 +162,7 @@ class _KChartWidgetState extends State<KChartWidget>
       },
       onHorizontalDragUpdate: (details) {
         if (isScale || isLongPress) return;
-        mScrollX = (details.primaryDelta / mScaleX + mScrollX)
-            .clamp(_rightScrollingOffset, ChartPainter.maxScrollX);
+        mScrollX = (details.primaryDelta / mScaleX + mScrollX).clamp(_rightScrollingOffset, ChartPainter.maxScrollX);
         notifyChanged();
       },
       onHorizontalDragEnd: (DragEndDetails details) {
@@ -238,32 +207,31 @@ class _KChartWidgetState extends State<KChartWidget>
           CustomPaint(
             size: Size(double.infinity, double.infinity),
             painter: ChartPainter(
-              datas: widget.datas,
-              scaleX: mScaleX,
-              scrollX: mScrollX,
-              selectX: mSelectX,
-              isLongPass: isLongPress,
-              mainState: widget.mainState,
-              secondaryState: widget.secondaryState,
-              isLine: widget.isLine,
-              sink: mInfoWindowStream?.sink,
-              bgColor: widget.bgColor,
-              fixedLength: widget.fixedLength,
-              maDayList: widget.maDayList,
-              shortFormatter: widget.shortFormatter,
-              fontFamily: widget.fontFamily,
-              wordVolume: widget.wordVolume,
-              rsiPeriod: widget.rsiPeriod,
-              wrPeriod: widget.wrPeriod,
-              macdShortPeriod: widget.macdShortPeriod,
-              macdLongPeriod: widget.macdLongPeriod,
-              macdMaPeriod: widget.macdMaPeriod,
-              kdjCalcPeriod: widget.kdjCalcPeriod,
-              kdjMaPeriod1: widget.kdjMaPeriod1,
-              kdjMaPeriod2: widget.kdjMaPeriod2,
-              pricePrecision: widget.pricePrecision,
-              amountPrecision: widget.amountPrecision
-            ),
+                datas: widget.datas,
+                scaleX: mScaleX,
+                scrollX: mScrollX,
+                selectX: mSelectX,
+                isLongPass: isLongPress,
+                mainState: widget.mainState,
+                secondaryState: widget.secondaryState,
+                isLine: widget.isLine,
+                sink: mInfoWindowStream?.sink,
+                bgColor: widget.bgColor,
+                fixedLength: widget.fixedLength,
+                maDayList: widget.maDayList,
+                shortFormatter: widget.shortFormatter,
+                fontFamily: widget.fontFamily,
+                wordVolume: widget.wordVolume,
+                rsiPeriod: widget.rsiPeriod,
+                wrPeriod: widget.wrPeriod,
+                macdShortPeriod: widget.macdShortPeriod,
+                macdLongPeriod: widget.macdLongPeriod,
+                macdMaPeriod: widget.macdMaPeriod,
+                kdjCalcPeriod: widget.kdjCalcPeriod,
+                kdjMaPeriod1: widget.kdjMaPeriod1,
+                kdjMaPeriod2: widget.kdjMaPeriod2,
+                pricePrecision: widget.pricePrecision,
+                amountPrecision: widget.amountPrecision),
           ),
           _buildInfoDialog()
         ],
@@ -320,8 +288,7 @@ class _KChartWidgetState extends State<KChartWidget>
       notifyChanged();
     });
     aniX.addStatusListener((status) {
-      if (status == AnimationStatus.completed ||
-          status == AnimationStatus.dismissed) {
+      if (status == AnimationStatus.completed || status == AnimationStatus.dismissed) {
         _onDragChanged(false);
         notifyChanged();
       }
@@ -335,10 +302,7 @@ class _KChartWidgetState extends State<KChartWidget>
     return StreamBuilder<InfoWindowEntity>(
       stream: mInfoWindowStream?.stream,
       builder: (context, snapshot) {
-        if (!isLongPress ||
-            widget.isLine == true ||
-            !snapshot.hasData ||
-            snapshot.data.kLineEntity == null) {
+        if (!isLongPress || widget.isLine == true || !snapshot.hasData || snapshot.data.kLineEntity == null) {
           return Container();
         }
 
@@ -410,9 +374,9 @@ class _KChartWidgetState extends State<KChartWidget>
   Widget _buildItem(String info, String infoName) {
     Color color = Color(0xFF8D9192);
     if (info.startsWith("+")) {
-      color = ChartColors.upColor;
+      color = ChartColors().upColor;
     } else if (info.startsWith("-")) {
-      color = ChartColors.dnColor;
+      color = ChartColors().dnColor;
     }
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,

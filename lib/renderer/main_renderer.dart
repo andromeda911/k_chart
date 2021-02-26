@@ -8,8 +8,8 @@ import '../k_chart_widget.dart' show MainState;
 import 'base_chart_renderer.dart';
 
 class MainRenderer extends BaseChartRenderer<CandleEntity> {
-  double mCandleWidth = ChartStyle.candleWidth;
-  double mCandleLineWidth = ChartStyle.candleLineWidth;
+  double mCandleWidth = ChartStyle().candleWidth;
+  double mCandleLineWidth = ChartStyle().candleLineWidth;
   MainState state;
   bool isLine;
 
@@ -23,7 +23,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     ..isAntiAlias = true
     ..style = PaintingStyle.stroke
     ..strokeWidth = 1.0
-    ..color = ChartColors.kLineColor;
+    ..color = ChartColors().kLineColor;
   Paint mLineFillPaint = Paint()
     ..style = PaintingStyle.fill
     ..isAntiAlias = true;
@@ -50,11 +50,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
           bgColor: bgColor,
           pricePrecision: pricePrecision,
         ) {
-    _contentRect = Rect.fromLTRB(
-        chartRect.left,
-        chartRect.top + _contentPadding,
-        chartRect.right,
-        chartRect.bottom - _contentPadding);
+    _contentRect = Rect.fromLTRB(chartRect.left, chartRect.top + _contentPadding, chartRect.right, chartRect.bottom - _contentPadding);
     if (maxValue == minValue) {
       maxValue *= 1.5;
       minValue /= 2;
@@ -84,32 +80,32 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
             if (middle)
               TextSpan(
                 text: 'BOLL: ',
-                style: getTextStyleLight(ChartColors.ma5Color),
+                style: getTextStyleLight(ChartColors().ma5Color),
               ),
             if (middle)
               TextSpan(
                 text: ChartFormats.money[pricePrecision].format(data.bollMiddle) + '    ',
-                style: getTextStyleBold(ChartColors.ma5Color),
+                style: getTextStyleBold(ChartColors().ma5Color),
               ),
             if (up)
               TextSpan(
                 text: 'UB: ',
-                style: getTextStyleLight(ChartColors.ma10Color),
+                style: getTextStyleLight(ChartColors().ma10Color),
               ),
             if (up)
               TextSpan(
                 text: ChartFormats.money[pricePrecision].format(data.bollUp) + '    ',
-                style: getTextStyleBold(ChartColors.ma10Color),
+                style: getTextStyleBold(ChartColors().ma10Color),
               ),
             if (down)
               TextSpan(
                 text: 'LB: ',
-                style: getTextStyleLight(ChartColors.ma20Color),
+                style: getTextStyleLight(ChartColors().ma20Color),
               ),
             if (down)
               TextSpan(
                 text: ChartFormats.money[pricePrecision].format(data.bollDown),
-                style: getTextStyleBold(ChartColors.ma20Color),
+                style: getTextStyleBold(ChartColors().ma20Color),
               ),
           ],
         );
@@ -132,9 +128,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
         chartRect.left + tp.width + rightTextScreenSidePadding * 2,
         chartRect.top + tp.height + rightTextAxisLinePadding * 2,
       ),
-      backgroundPaint
-        ..color =
-            bgColor?.elementAt(0)?.withOpacity(0.75) ?? ChartColors.background,
+      backgroundPaint..color = bgColor?.elementAt(0)?.withOpacity(0.75) ?? ChartColors().background,
     );
 
     tp.paint(canvas, Offset(x, chartRect.top + rightTextAxisLinePadding));
@@ -195,10 +189,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
           canvas,
           Offset(
             chartRect.width - tp.width - rightTextScreenSidePadding,
-            topPadding +
-                rowSpace * i +
-                rightTextAxisLinePadding -
-                (i == gridRows ? tp.height + 10 : 0),
+            topPadding + rowSpace * i + rightTextAxisLinePadding - (i == gridRows ? tp.height + 10 : 0),
           ),
         );
         RenderUtil.drawDashedLine(
@@ -228,7 +219,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
   @override
   void drawGrid(Canvas canvas, int gridRows, int gridColumns) {
     double rowSpace = chartRect.height / gridRows;
-    for (int i = 0; i <= gridRows; i++) {
+    for (int i = 1; i <= gridRows; i++) {
       canvas.drawPath(
         dashPath(
           Path()
@@ -241,7 +232,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     }
 
     double columnSpace = chartRect.width / gridColumns;
-    for (int i = 0; i <= gridColumns; i++) {
+    for (int i = 1; i <= gridColumns; i++) {
       // shift is for the last and first vertical lines to keep it's full
       // width inside the screen
       var shift = 0.0;
@@ -286,25 +277,22 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
 //    }
     if (lastX == curX) lastX = 0; //起点位置填充
     mLinePath.moveTo(lastX, getY(lastPrice));
-    mLinePath.cubicTo((lastX + curX) / 2, getY(lastPrice), (lastX + curX) / 2,
-        getY(curPrice), curX, getY(curPrice));
+    mLinePath.cubicTo((lastX + curX) / 2, getY(lastPrice), (lastX + curX) / 2, getY(curPrice), curX, getY(curPrice));
 
 //    //画阴影
     mLineFillShader ??= LinearGradient(
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
       tileMode: TileMode.clamp,
-      colors: [ChartColors.lineFillColor, Colors.transparent],
-    ).createShader(Rect.fromLTRB(
-        chartRect.left, chartRect.top, chartRect.right, chartRect.bottom));
+      colors: [ChartColors().lineFillColor, Colors.transparent],
+    ).createShader(Rect.fromLTRB(chartRect.left, chartRect.top, chartRect.right, chartRect.bottom));
     mLineFillPaint..shader = mLineFillShader;
 
     mLineFillPath ??= Path();
 
     mLineFillPath.moveTo(lastX, chartRect.height + chartRect.top);
     mLineFillPath.lineTo(lastX, getY(lastPrice));
-    mLineFillPath.cubicTo((lastX + curX) / 2, getY(lastPrice),
-        (lastX + curX) / 2, getY(curPrice), curX, getY(curPrice));
+    mLineFillPath.cubicTo((lastX + curX) / 2, getY(lastPrice), (lastX + curX) / 2, getY(curPrice), curX, getY(curPrice));
     mLineFillPath.lineTo(curX, chartRect.height + chartRect.top);
     mLineFillPath.close();
 
@@ -333,7 +321,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
           canvas,
           lastX,
           curX,
-          ChartColors.getMAColor(i),
+          ChartColors().getMAColor(i),
         );
       }
     }
@@ -346,15 +334,12 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     double fromX,
     double toX,
   ) {
-    if (from.bollUp != null &&
-        from.bollUp != 0 &&
-        from.bollDown != null &&
-        from.bollDown != 0) {
+    if (from.bollUp != null && from.bollUp != 0 && from.bollDown != null && from.bollDown != 0) {
       drawPath(
         [from.bollUp, to.bollUp, to.bollDown, from.bollDown],
         [fromX, toX, toX, fromX],
         canvas,
-        ChartColors.bollBackground,
+        ChartColors().bollBackground,
       );
     }
     if (from.bollUp != null && from.bollUp != 0) {
@@ -364,7 +349,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
         canvas,
         fromX,
         toX,
-        ChartColors.bollUp,
+        ChartColors().bollUp,
       );
     }
 
@@ -375,7 +360,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
         canvas,
         fromX,
         toX,
-        ChartColors.bollDown,
+        ChartColors().bollDown,
       );
     }
     if (from.bollMiddle != null && from.bollMiddle != 0) {
@@ -385,7 +370,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
         canvas,
         fromX,
         toX,
-        ChartColors.bollMiddle,
+        ChartColors().bollMiddle,
       );
     }
   }
@@ -398,7 +383,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
     double r = mCandleWidth / 2;
     double lineR = mCandleLineWidth / 2;
     if (open > close) {
-      chartPaint.color = ChartColors.upColor;
+      chartPaint.color = ChartColors().upColor;
       canvas.drawRect(
         Rect.fromLTRB(curX - r, close, curX + r, open),
         chartPaint,
@@ -408,7 +393,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
         chartPaint,
       );
     } else if (close > open) {
-      chartPaint.color = ChartColors.dnColor;
+      chartPaint.color = ChartColors().dnColor;
       canvas.drawRect(
         Rect.fromLTRB(curX - r, open, curX + r, close),
         chartPaint,
@@ -418,7 +403,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
         chartPaint,
       );
     } else {
-      chartPaint.color = ChartColors.upColor;
+      chartPaint.color = ChartColors().upColor;
       canvas.drawLine(
         Offset(curX - r, open),
         Offset(curX + r, open),
@@ -436,7 +421,7 @@ class MainRenderer extends BaseChartRenderer<CandleEntity> {
   List<InlineSpan> _createMATextSpan(CandleEntity data) {
     List<InlineSpan> result = [];
     for (int i = 0; i < data.maValueList.length; i++) {
-      final color = ChartColors.getMAColor(i);
+      final color = ChartColors().getMAColor(i);
       final value = data.maValueList[i];
       if (value != 0) {
         result.add(

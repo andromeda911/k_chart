@@ -8,7 +8,7 @@ import '../k_chart_widget.dart' show SecondaryState;
 import 'base_chart_renderer.dart';
 
 class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
-  double mMACDWidth = ChartStyle.macdWidth;
+  double mMACDWidth = ChartStyle().macdWidth;
   SecondaryState state;
   final int macdShortPeriod;
   final int macdLongPeriod;
@@ -68,7 +68,7 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
           canvas,
           lastX,
           curX,
-          ChartColors.kColor,
+          ChartColors().kColor,
         );
         drawLine(
           lastPoint.d,
@@ -76,7 +76,7 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
           canvas,
           lastX,
           curX,
-          ChartColors.dColor,
+          ChartColors().dColor,
         );
         drawLine(
           lastPoint.j,
@@ -84,7 +84,7 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
           canvas,
           lastX,
           curX,
-          ChartColors.jColor,
+          ChartColors().jColor,
         );
         break;
       case SecondaryState.RSI:
@@ -94,7 +94,7 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
           canvas,
           lastX,
           curX,
-          ChartColors.rsiColor,
+          ChartColors().rsiColor,
         );
         break;
       case SecondaryState.WR:
@@ -104,7 +104,7 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
           canvas,
           lastX,
           curX,
-          ChartColors.rsiColor,
+          ChartColors().rsiColor,
         );
         break;
       default:
@@ -123,19 +123,15 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
     double r = mMACDWidth / 2;
     double zeroy = getY(0);
     if (curPoint.macd > 0) {
-      canvas.drawRect(Rect.fromLTRB(curX - r, macdY, curX + r, zeroy),
-          chartPaint..color = ChartColors.upColor);
+      canvas.drawRect(Rect.fromLTRB(curX - r, macdY, curX + r, zeroy), chartPaint..color = ChartColors().upColor);
     } else {
-      canvas.drawRect(Rect.fromLTRB(curX - r, zeroy, curX + r, macdY),
-          chartPaint..color = ChartColors.dnColor);
+      canvas.drawRect(Rect.fromLTRB(curX - r, zeroy, curX + r, macdY), chartPaint..color = ChartColors().dnColor);
     }
     if (lastPoint.dif != 0) {
-      drawLine(lastPoint.dif, curPoint.dif, canvas, lastX, curX,
-          ChartColors.difColor);
+      drawLine(lastPoint.dif, curPoint.dif, canvas, lastX, curX, ChartColors().difColor);
     }
     if (lastPoint.dea != 0) {
-      drawLine(lastPoint.dea, curPoint.dea, canvas, lastX, curX,
-          ChartColors.deaColor);
+      drawLine(lastPoint.dea, curPoint.dea, canvas, lastX, curX, ChartColors().deaColor);
     }
   }
 
@@ -156,32 +152,32 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
           if (data.macd != 0)
             TextSpan(
               text: "MACD: ",
-              style: getTextStyleLight(ChartColors.macdColorOpacity70),
+              style: getTextStyleLight(ChartColors().macdColorOpacity70),
             ),
           if (data.macd != 0)
             TextSpan(
               text: "${format(data.macd)}    ",
-              style: getTextStyleBold(ChartColors.macdColor),
+              style: getTextStyleBold(ChartColors().macdColor),
             ),
           if (data.dif != 0)
             TextSpan(
               text: "DIF: ",
-              style: getTextStyleLight(ChartColors.difColorOpacity70),
+              style: getTextStyleLight(ChartColors().difColorOpacity70),
             ),
           if (data.dif != 0)
             TextSpan(
               text: "${format(data.dif)}    ",
-              style: getTextStyleBold(ChartColors.difColor),
+              style: getTextStyleBold(ChartColors().difColor),
             ),
           if (data.dea != 0)
             TextSpan(
               text: "DEA: ",
-              style: getTextStyleLight(ChartColors.deaColorOpacity70),
+              style: getTextStyleLight(ChartColors().deaColorOpacity70),
             ),
           if (data.dea != 0)
             TextSpan(
               text: "${format(data.dea)}",
-              style: getTextStyleBold(ChartColors.deaColor),
+              style: getTextStyleBold(ChartColors().deaColor),
             ),
         ];
         break;
@@ -198,32 +194,32 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
           if (data.macd != 0)
             TextSpan(
               text: 'K: ',
-              style: getTextStyleLight(ChartColors.kColorOpacity70),
+              style: getTextStyleLight(ChartColors().kColorOpacity70),
             ),
           if (data.macd != 0)
             TextSpan(
               text: '${format(data.k)}    ',
-              style: getTextStyleBold(ChartColors.kColor),
+              style: getTextStyleBold(ChartColors().kColor),
             ),
           if (data.dif != 0)
             TextSpan(
               text: 'D: ',
-              style: getTextStyleBold(ChartColors.dColorOpacity70),
+              style: getTextStyleBold(ChartColors().dColorOpacity70),
             ),
           if (data.dif != 0)
             TextSpan(
               text: '${format(data.d)}    ',
-              style: getTextStyleBold(ChartColors.dColor),
+              style: getTextStyleBold(ChartColors().dColor),
             ),
           if (data.dea != 0)
             TextSpan(
               text: 'J: ',
-              style: getTextStyleLight(ChartColors.jColorOpacity70),
+              style: getTextStyleLight(ChartColors().jColorOpacity70),
             ),
           if (data.dea != 0)
             TextSpan(
               text: '${format(data.j)}',
-              style: getTextStyleBold(ChartColors.jColor),
+              style: getTextStyleBold(ChartColors().jColor),
             ),
         ];
         break;
@@ -231,11 +227,11 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
         children = [
           TextSpan(
             text: 'RSI $rsiPeriod: ',
-            style: getTextStyleLight(ChartColors.rsiColorOpacity70),
+            style: getTextStyleLight(ChartColors().rsiColorOpacity70),
           ),
           TextSpan(
             text: format(data.rsi),
-            style: getTextStyleBold(ChartColors.rsiColor),
+            style: getTextStyleBold(ChartColors().rsiColor),
           ),
         ];
         break;
@@ -243,11 +239,11 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
         children = [
           TextSpan(
             text: 'WR $wrPeriod: ',
-            style: getTextStyleLight(ChartColors.rsiColorOpacity70),
+            style: getTextStyleLight(ChartColors().rsiColorOpacity70),
           ),
           TextSpan(
             text: format(data.r),
-            style: getTextStyleBold(ChartColors.rsiColor),
+            style: getTextStyleBold(ChartColors().rsiColor),
           ),
         ];
         break;
@@ -266,9 +262,7 @@ class SecondaryRenderer extends BaseChartRenderer<MACDEntity> {
         chartRect.left + tp.width + rightTextScreenSidePadding * 2,
         chartRect.top + tp.height + rightTextAxisLinePadding * 2,
       ),
-      backgroundPaint
-        ..color =
-            bgColor?.elementAt(0)?.withOpacity(0.75) ?? ChartColors.background,
+      backgroundPaint..color = bgColor?.elementAt(0)?.withOpacity(0.75) ?? ChartColors().background,
     );
     tp.paint(
       canvas,

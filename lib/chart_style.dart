@@ -2,55 +2,107 @@ import 'package:flutter/material.dart' show Color, Colors;
 import 'package:intl/intl.dart';
 
 class ChartColors {
-  ChartColors._();
+  static const Color defaultTextColor = Colors.white;
 
-  static const Color kLineColor = Color(0xff4C86CD);
-  static const Color lineFillColor = Color(0xFFD8E2E2);
-  static const Color ma5Color = Color(0xFFECCA67);
-  static const Color ma10Color = Color(0xFF84DFD7);
-  static const Color ma20Color = Color(0xFFAE8AD9);
-  static const Color ma5ColorOpacity70 = Color(0xBFECCA67);
-  static const Color ma10ColorOpacity70 = Color(0xBF84DFD7);
-  static const Color ma20ColorOpacity70 = Color(0xBFAE8AD9);
-  static const Color bollUp = Color(0xFF2979FF);
-  static const Color bollMiddle = Color(0xFFff1744);
-  static const Color bollDown = Color(0xFF2979FF);
-  static const Color bollBackground = Color(0x222979FF);
-  static const Color upColor = Color(0xFF03AD90);
-  static const Color dnColor = Color(0xFFD14B64);
-  static const Color upColorDark = Color(0xFF03AD90);
-  static const Color dnColorDark = Color(0xFFD14B64);
-  static const Color volColor = Colors.white54;
+  Color kLineColor;
+  Color lineFillColor;
+  Color ma5Color;
+//static const Color ma10Color;
+  Color ma10Color;
+  Color ma20Color;
+  Color ma5ColorOpacity70;
+  Color ma10ColorOpacity70;
+  Color ma20ColorOpacity70;
+  Color bollUp;
+  Color bollMiddle;
+  Color bollDown;
+  Color bollBackground;
+//static const Color upColor;
+  Color upColor;
+  Color dnColor;
+  Color upColorDark;
+  Color dnColorDark;
+  Color volColor;
+  Color gridColor;
+  Color macdColor;
+  Color difColor;
+  Color deaColor;
+  Color macdColorOpacity70;
+  Color difColorOpacity70;
+  Color deaColorOpacity70;
+  Color kColor;
+  Color dColor;
+  Color jColor;
+  Color rsiColor;
+  Color kColorOpacity70;
+  Color dColorOpacity70;
+  Color jColorOpacity70;
+  Color rsiColorOpacity70;
+// Depth color
+  Color depthBuyColor;
+  Color depthSellColor;
+// Display the value border color after selection
+  Color selectBorderColor;
+// The fill color of the background of the displayed value after selection
+  Color selectFillColor;
+  Color background;
 
-  static const Color macdColor = Color(0xffABB8C1);
-  static const Color difColor = Color(0xffF1D574);
-  static const Color deaColor = Color(0xff84DFD7);
-  static const Color macdColorOpacity70 = Color(0xBFABB8C1);
-  static const Color difColorOpacity70 = Color(0xBFF1D574);
-  static const Color deaColorOpacity70 = Color(0xBF84DFD7);
+  static final ChartColors _instance = ChartColors._();
 
-  static const Color kColor = Color(0xffF1D574);
-  static const Color dColor = Color(0xff84DFD7);
-  static const Color jColor = Color(0xffAE8AD9);
-  static const Color rsiColor = Color(0xffE8C55F);
-  static const Color kColorOpacity70 = Color(0xBFF1D574);
-  static const Color dColorOpacity70 = Color(0xBF84DFD7);
-  static const Color jColorOpacity70 = Color(0xBFAE8AD9);
-  static const Color rsiColorOpacity70 = Color(0xBFE8C55F);
+  factory ChartColors() {
+    return _instance;
+  }
 
-  static const Color defaultTextColor = Color(0xFFABB8C1);
+  ChartColors._() {
+    kLineColor = Color(0xff4C86CD);
+    lineFillColor = Colors.white54;
+    ma5Color = Color(0xFF2979ff);
+    //static const Color ma10Color = Color(0xFFffffff);
+    ma10Color = Colors.orange;
+    ma20Color = Color(0xFFffea00);
+    ma5ColorOpacity70 = Color(0xBF007AFF);
+    ma10ColorOpacity70 = Color(0xBFffffff);
+    ma20ColorOpacity70 = Color(0xBFffea00);
+    bollUp = Color(0xFF2979FF);
+    bollMiddle = Color(0xFFff1744);
+    bollDown = Color(0xFF2979FF);
+    bollBackground = Color(0x222979FF);
+    //static const Color upColor = Color(0xFF00B865);
+    upColor = Colors.green;
+    dnColor = Color(0xFFFF5D52);
+    upColorDark = Color(0xFF009F4C);
+    dnColorDark = Color(0xFFE64439);
+    volColor = Colors.white54;
+    gridColor = Colors.white54;
 
-  // Depth color
-  static const Color depthBuyColor = Color(0xFF03AD90);
-  static const Color depthSellColor = Color(0xFFD14B64);
-  // Display the value border color after selection
-  static const Color selectBorderColor = Color(0xFF6C7E8A);
-  // The fill color of the background of the displayed value after selection
-  static const Color selectFillColor = Color(0xFF1a193a);
+    macdColor = Color(0xffb388ff);
+    difColor = Color(0xffffea00);
+    deaColor = Color(0xff18ffff);
+    macdColorOpacity70 = Color(0xBFb388ff);
+    difColorOpacity70 = Color(0xBFffea00);
+    deaColorOpacity70 = Color(0xBF18ffff);
 
-  static const background = Color(0xff18191d);
+    kColor = Color(0xffffea00);
+    dColor = Color(0xff18ffff);
+    jColor = Color(0xffb388ff);
+    rsiColor = Color(0xffffea00);
+    kColorOpacity70 = Color(0xBFffea00);
+    dColorOpacity70 = Color(0xBF18ffff);
+    jColorOpacity70 = Color(0xBFb388ff);
+    rsiColorOpacity70 = Color(0xBFffea00);
 
-  static Color getMAColor(int index) {
+    // Depth color
+    depthBuyColor = Color(0xFF00B865);
+    depthSellColor = Color(0xFFFF5D52);
+    // Display the value border color after selection
+    selectBorderColor = Colors.white12;
+    // The fill color of the background of the displayed value after selection
+    selectFillColor = Color(0xFF1a193a);
+
+    background = Color(0xff18191d);
+  }
+
+  Color getMAColor(int index) {
     Color maColor = ma5Color;
     switch (index % 3) {
       case 0:
@@ -68,30 +120,52 @@ class ChartColors {
 }
 
 class ChartStyle {
-  ChartStyle._();
-
   //点与点的距离
-  static const double pointWidth = 11.0;
+  double pointWidth;
 
   //蜡烛宽度
-  static const double candleWidth = 6.0;
+  double candleWidth;
 
   //蜡烛中间线的宽度
-  static const double candleLineWidth = 0.6;
+  double candleLineWidth;
 
   //vol柱子宽度
-  static const double volWidth = 6.0;
+  double volWidth;
 
   //macd柱子宽度
-  static const double macdWidth = 3.0;
+  double macdWidth;
 
   //垂直交叉线宽度
-  static const double vCrossWidth = 0.5;
+  double vCrossWidth;
 
   //水平交叉线宽度
-  static const double hCrossWidth = 0.5;
+  double hCrossWidth;
 
-  static const fontSize = 10.0;
+  double fontSize;
+
+  static final ChartStyle _instance = ChartStyle._();
+
+  factory ChartStyle() {
+    return _instance;
+  }
+
+  ChartStyle._() {
+    pointWidth = 11.0;
+
+    candleWidth = 6.0;
+
+    candleLineWidth = 1.0;
+
+    volWidth = 6.0;
+
+    macdWidth = 3.0;
+
+    vCrossWidth = 0.5;
+
+    hCrossWidth = 0.5;
+
+    fontSize = 10.0;
+  }
 }
 
 class ChartFormats {
@@ -112,5 +186,4 @@ class ChartFormats {
     NumberFormat('#,##0.000000000'),
     NumberFormat('#,##0.0000000000'),
   ];
-
 }
