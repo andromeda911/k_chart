@@ -299,7 +299,7 @@ String dateFormat(DateTime date, List<String> formats) {
       sb.write(format);
     }
   }
-  print(date);
+
   return sb.toString();
 }
 
