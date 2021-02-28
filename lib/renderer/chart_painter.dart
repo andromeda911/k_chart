@@ -334,7 +334,7 @@ class ChartPainter extends BaseChartPainter {
     final datePaddingX = 5;
     TextPainter dateTp = getTextPainter(
       ChartFormats.dateWithTime.format(DateTime.fromMillisecondsSinceEpoch(point.time)),
-      bgColor.elementAt(0) ?? Colors.black,
+      bgColor?.elementAt(0) ?? Colors.black,
       true,
     );
     textWidth = dateTp.width;
