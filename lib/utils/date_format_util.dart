@@ -299,7 +299,7 @@ String dateFormat(DateTime date, List<String> formats) {
       sb.write(format);
     }
   }
-
+  print(date);
   return sb.toString();
 }
 
@@ -311,55 +311,12 @@ String _digits(int value, int length) {
   return ret;
 }
 
-const List<String> monthShort = const <String>[
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec'
-];
+const List<String> monthShort = const <String>['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-const List<String> monthLong = const <String>[
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-];
+const List<String> monthLong = const <String>['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-const List<String> dayShort = const [
-  'Mon',
-  'Tue',
-  'Wed',
-  'Thur',
-  'Fri',
-  'Sat',
-  'Sun'
-];
+const List<String> dayShort = const ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'];
 
-const List<String> dayLong = const [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday'
-];
+const List<String> dayLong = const ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-int dayInYear(DateTime date) =>
-    date.difference(DateTime(date.year, 1, 1)).inDays;
+int dayInYear(DateTime date) => date.difference(DateTime(date.year, 1, 1)).inDays;

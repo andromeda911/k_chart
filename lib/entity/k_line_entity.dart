@@ -23,23 +23,17 @@ class KLineEntity extends KEntity {
     this.vol,
   });
 
-  KLineEntity.fromJson(Map<String, dynamic> json) {
-    open = (json['open'] as num)?.toDouble();
-    high = (json['high'] as num)?.toDouble();
-    low = (json['low'] as num)?.toDouble();
-    close = (json['close'] as num)?.toDouble();
-    vol = (json['vol'] as num)?.toDouble();
-    amount = (json['amount'] as num)?.toDouble();
-    time = (json['time'] as num)?.toInt();
-    //兼容火币数据
-    if (time == null) {
-      time = ((json['id'] as num)?.toInt());
-      if (time != null) {
-        time *= 1000;
-      }
-    }
-    ratio = (json['ratio'] as num)?.toDouble();
-    change = (json['change'] as num)?.toDouble();
+  KLineEntity.fromJson(List data) {
+    open = double.parse(data[1]);
+    high = double.parse(data[2]);
+    low = double.parse(data[3]);
+    close = double.parse(data[4]);
+    vol = double.parse(data[5]);
+    amount = double.parse(data[7]);
+    time = data[6] + 1;
+
+    ratio = null;
+    change = null;
   }
 
   Map<String, dynamic> toJson() {

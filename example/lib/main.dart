@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    getData('60min');
+    getData('1h');
     rootBundle.loadString('assets/depth.json').then((result) {
       final parseJson = json.decode(result);
       Map tick = parseJson['tick'];
@@ -247,13 +247,14 @@ class _MyHomePageState extends State<MyHomePage> {
   void getData(String period) {
     Future<String> future = getIPAddress('$period');
     future.then((result) {
-      Map parseJson = json.decode(result);
-      List list = parseJson['data'];
+      List list = json.decode(result);
       datas = list.map((item) => KLineEntity.fromJson(item)).toList().reversed.toList().cast<KLineEntity>();
       DataUtil.calculate(datas);
       showLoading = false;
       setState(() {});
-    }).catchError((_) {
+    }).catchError((_, st) {
+      print(_);
+      print(st);
       showLoading = false;
       setState(() {});
       print('获取数据失败');
@@ -262,14 +263,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //获取火币数据，需要翻墙
   Future<String> getIPAddress(String period) async {
-    var url = 'https://api.huobi.br.com/market/history/kline?period=${period ?? '1day'}&size=300&symbol=btcusdt';
+    var url = 'https://dex.binance.org/api/v1/mini/klines?symbol=TBCC-BA1M_BNB&interval=${period ?? '1h'}';
+
     String result;
     var response = await http.get(url);
+
     if (response.statusCode == 200) {
       result = response.body;
     } else {
       print('Failed getting IP address');
     }
+
+    print(result);
     return result;
   }
 }
